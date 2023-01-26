@@ -24,14 +24,14 @@ from sklearn.model_selection import train_test_split
 # g = lambda x: np.array([x**0, x, x**2, x**3, np.exp(x)])
 
 data = np.loadtxt("CaCovidInfMarch24toMidJuly.txt")
-t = np.arange(1,len(data),1)
+t = np.arange(1,len(data)+1,1)/120
 
 X_train, X_test, y_train, y_test = train_test_split(t, data, train_size=90, shuffle=False)
 
-def f(x): return np.array([x**0, x])
+def f(x): return np.array([x**0, x, x**2, x**3])
 
 gd_params = {
-    "lr": 0.001,
+    "lr": 0.01,
     "num_epochs": 100,
     "batch_size": 20
 }
@@ -39,7 +39,8 @@ gd_params = {
 linear_reg = CustomRegressors(f, type='sgd', gd_params=gd_params)
 linear_reg.fit(X_train,y_train)
 print(linear_reg.arr_params)
-y_pred = linear_reg.pred(t)
+y_pred = linear_reg.pred(X_train)
+X_train =X_train*120
 plt.plot(X_train, y_train, "b.")
 plt.plot(X_train,y_pred, "r-")
 plt.xlabel("time", fontsize=18)
