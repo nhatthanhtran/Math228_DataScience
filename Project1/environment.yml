@@ -1,0 +1,12 @@
+name: math228p1
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - pip
+  - matplotlib
+  - numpy
+  - pandas
+  - scikit-learn
+

@@ -1,5 +1,6 @@
 
 import numpy as np
+from sklearn.preprocessing import StandardScaler
 
 
 class CustomRegressors():
@@ -10,10 +11,13 @@ class CustomRegressors():
         self.bln_fitted =  False
         self.gd_params = gd_params
         self._set_num_param()
+        self.scaler = StandardScaler()
     def fit(self, x, y):
-
-        y = y.reshape(-1)
-        x = x.reshape(-1)
+        x = x.reshape(-1,1)
+        y = y.reshape(-1,1)
+        self.scaler.fit(x,)
+        y = self.scaler.transform(y)
+        x = self.scaler.transform(x)
         data_size = len(y)
         if self.type == 'normal': # Solving the normal equation exactly    
             self.arr_params = self._normal_solver(x, y, data_size).T
@@ -28,9 +32,10 @@ class CustomRegressors():
 
     def pred(self, x):
         if self.bln_fitted:
-            x = x.reshape(-1)
+            x = self.scaler.transform(x.reshape(-1,1))
             matA = np.array(self.obj_func_parts(x)).T
-            return matA@self.arr_params
+            matA = matA.squeeze(0)
+            return self.scaler.inverse_transform(matA@self.arr_params.T)
 
         else:
             print("Need to fit before predict.")
@@ -38,7 +43,7 @@ class CustomRegressors():
 
     def _normal_solver(self, x, y, data_size):
         matA = np.array(self.obj_func_parts(x)).T
-
+        matA = matA.squeeze(0)
         return np.linalg.inv(matA.T.dot(matA)).dot(matA.T).dot(y)
 
     def _grad_descent_solver(self, x, y, data_size):
