@@ -20,7 +20,7 @@ class CustomRegressors():
         x = self.scaler.transform(x)
         data_size = len(y)
         if self.type == 'normal': # Solving the normal equation exactly    
-            self.arr_params = self._normal_solver(x, y, data_size).T
+            self.arr_params = self._normal_solver(x, y, data_size)
         elif self.type == 'gd':
             self._grad_descent_solver(x, y, data_size)
         elif self.type == 'sgd':
@@ -35,7 +35,7 @@ class CustomRegressors():
             x = self.scaler.transform(x.reshape(-1,1))
             matA = np.array(self.obj_func_parts(x)).T
             matA = matA.squeeze(0)
-            return self.scaler.inverse_transform(matA@self.arr_params.T)
+            return self.scaler.inverse_transform(matA@self.arr_params)
 
         else:
             print("Need to fit before predict.")
@@ -50,6 +50,7 @@ class CustomRegressors():
         num_epochs = self.gd_params["num_epochs"]
         lr = self.gd_params["lr"]
         matA = np.array(self.obj_func_parts(x)).T
+        matA = matA.squeeze(0)
         y = y.reshape(len(y),1)
 
         self.arr_params = np.random.randn(self.num_param, 1)
@@ -62,6 +63,7 @@ class CustomRegressors():
         batch_size = self.gd_params["batch_size"]
 
         matA = np.array(self.obj_func_parts(x)).T
+        matA = matA.squeeze(0)
         y = y.reshape(len(y),1)
         self.arr_params = np.random.randn(self.num_param, 1)
         for ep in range(num_epochs):
