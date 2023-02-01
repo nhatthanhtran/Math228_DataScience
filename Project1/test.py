@@ -30,11 +30,11 @@ t = np.arange(1,len(data)+1,1)
 
 X_train, X_test, y_train, y_test = train_test_split(t, data, train_size=90, shuffle=False)
 
-def f(x): return np.array([x**0, x,x**2,x**3, np.exp(x)])
+def f(x): return np.array([x**0, x,x**2])
 
 gd_params = {
     "lr": 0.001,
-    "num_epochs": 100,
+    "num_epochs": 1000,
     "batch_size": 20
 }
 

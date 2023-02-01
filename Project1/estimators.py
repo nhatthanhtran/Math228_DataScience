@@ -12,11 +12,13 @@ class CustomRegressors():
         self.gd_params = gd_params
         self._set_num_param()
         self.scaler = StandardScaler()
+        self.scaler_y = StandardScaler()
     def fit(self, x, y):
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         self.scaler.fit(x,)
-        y = self.scaler.transform(y)
+        self.scaler_y.fit(y)
+        y = self.scaler_y.transform(y)
         x = self.scaler.transform(x)
         data_size = len(y)
         if self.type == 'normal': # Solving the normal equation exactly    
@@ -35,7 +37,7 @@ class CustomRegressors():
             x = self.scaler.transform(x.reshape(-1,1))
             matA = np.array(self.obj_func_parts(x)).T
             matA = matA.squeeze(0)
-            return self.scaler.inverse_transform(matA@self.arr_params)
+            return self.scaler_y.inverse_transform(matA@self.arr_params)
 
         else:
             print("Need to fit before predict.")
