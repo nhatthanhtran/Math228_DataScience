@@ -1,0 +1,15 @@
+name: math228p2
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - scipy
+  - matplotlib
+  - seaborn
+  - jupyter
+  - jupyterlab
+  - jupyter_contrib_nbextensions
+  - pandas
+  - pip
+pip:
+  - tensorflow
