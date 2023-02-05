@@ -1,15 +1,13 @@
 name: math228p2
 channels:
   - conda-forge
+  - defaults
 dependencies:
-  - numpy
-  - scipy
-  - matplotlib
-  - seaborn
-  - jupyter
-  - jupyterlab
-  - jupyter_contrib_nbextensions
-  - pandas
+  - python=3.10
   - pip
+  - matplotlib
+  - numpy
+  - pandas
+  - scikit-learn
 pip:
   - tensorflow
