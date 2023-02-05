@@ -9,5 +9,8 @@ dependencies:
   - numpy
   - pandas
   - scikit-learn
+  - jupyter
+  - jupyterlab
+  - jupyter_contrib_nbextensions
 pip:
   - tensorflow
